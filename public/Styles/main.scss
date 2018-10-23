@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+header{
+    background-color: black;   
+    display: flex;
+    
+    nav{
+        margin: 1% 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        ul{
+            margin: 0 7%;
+            display: flex;
+                li{
+                    margin: auto 7%;
+                }
+        }
+    }
+
+}
+
+.titulo{
+    width: 94%;
+    height: 10%;
+    font-size: 300%;
+    text-align: center;
+    padding: 3%;
+}

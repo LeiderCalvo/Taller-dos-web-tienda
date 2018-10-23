@@ -1,0 +1,1 @@
+console.log("no funciona porque eres feo");
