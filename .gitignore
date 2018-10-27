@@ -2,4 +2,6 @@ node_modules
 package-lock.json
 public/Styles/main.css.map
 public/Styles/main.css
+public/Styles/descripcion.css.map
+public/Styles/descripcion.css
 ProductsList.js

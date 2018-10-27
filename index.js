@@ -41,7 +41,7 @@ app.get('/', function(request, response){
 //renderizar la pagina de la tienda dependiendo si es camisa, camiseta o pantalon
 app.get('/tienda', function(request, response){
     const coleccion = db.collection('productos');
-    //usamos el objeto vacìo para que retorne todos los documentos
+
     coleccion.find({
         soy: { 
              '$eq': request.query.producto
@@ -82,9 +82,29 @@ app.get('/tiendageneral', function(request,response){
     });
 });
 
+//renderizar la pagina de descripcion para el documento
+app.get('/descripcion', function(request, response){
+    const coleccion = db.collection('productos');
+    var prod = request.query.producto;
+    coleccion.find({
+        Titulo:{
+            '$eq': prod
+        }
+    }).toArray(function(err, docs){
+        if(err){
+            console.log(err);
+            response.send(err);
+            return;
+        }
+
+        var contexto = {producto: docs};
+        response.render('descripcion', contexto);
+    });
+});
+
 //para agregar un documento a la base de datos de mongo
 app.get('/AgregarDocumento', function(request, response){
-    const coleccion = db.coleccion('Productos');
+    const coleccion = db.collection('productos');
     //aqui debería pasarle variables por la ruta para agregar
     coleccion.insert({
             Titulo : "GIORDANA",
