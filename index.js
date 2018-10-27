@@ -43,9 +43,9 @@ app.get('/tienda', function(request, response){
     const coleccion = db.collection('productos');
     //usamos el objeto vacìo para que retorne todos los documentos
     coleccion.find({
-        color: {
-            '$eq': "Negro"
-       }
+        soy: { 
+             '$eq': request.query.producto
+        }
     }).toArray(function(err, docs){
         if(err){
             console.error(err);
@@ -63,6 +63,22 @@ app.get('/tienda', function(request, response){
         
         response.render('home', contexto);
         
+    });
+});
+
+//Renderizar la tienda de manera general(todos los productos)
+app.get('/tiendageneral', function(request,response){
+    const coleccion = db.collection('productos');
+
+    coleccion.find({}).toArray(function(err,docs){
+        if(err){
+            console.log(err);
+            response.send(err);
+            return;
+        }
+        docs.sort(function(a, b){return 0.5 - Math.random()});
+        var contexto = { titulo: "GENERAL", productos: docs};
+        response.render('home', contexto);
     });
 });
 
