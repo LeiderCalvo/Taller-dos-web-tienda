@@ -8,10 +8,37 @@
     <link rel="stylesheet" href="/Styles/checkOut.css" />
 </head>
 <body>
-    {{#each pCarrito}}
-        <ul>
-            <li>{{Titulo}}</li>
-        </ul>
-    {{/each}}
+    <div class="cuerpo">
+        <div class="cuerpo__izq">
+            {{#each pCarrito}}
+                <div class="cuerpo__izq__item">
+                    <img src="{{imagen}}" alt="" class="cuerpo__izq__item__img" width="15%" height="35%">
+                    
+                    <div class="cuerpo__izq__item__img__name">
+                        <h2>{{Titulo}}</h2>
+                        <h6>{{soy}}</h6>
+                    </div>
+
+                    <p>color</p>
+                    <div data-color="{{color}}" class="color"></div>
+                    <p>Talla</p>
+                    <div data-talla="{{talla}}" class="talla"></div>
+                    <h3 class="precio">${{Precio}}</h3>
+                    <div class="cerrar">x</div>
+                </div>
+            {{/each}}
+        </div>
+        <div class="cuerpo__der">
+
+        </div>
+    </div>
+
+        <div class="final">
+            <div class="btnVaciar">VACIAR CARRITO</div>
+            <div class="total">total: </div>
+        </div>
+
+
+    <script src="/Scripts/checkOut.js"></script>
 </body>
 </html>
