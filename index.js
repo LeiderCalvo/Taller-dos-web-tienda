@@ -1,15 +1,22 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const hbs = require('express-handlebars');
 const MongoClient = require('mongodb').MongoClient;
 //const path = require('path');
 
 const app = express();
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(express.json());
 
 const url = 'mongodb://localhost:27017';
 const dbName = 'Tienda';
 const client = new MongoClient(url);
 var db = null;
+
+
 
 //codigo para conectarnos con el cliente que acabamos de crear  
 client.connect(function(err){
@@ -33,12 +40,12 @@ app.set('view engine','handlebars');
 
 //LLAMADO DE LAS RUTAS//////////////////////////////////////////////////////////////////////
 
-//renderizar el template de la pagina inicial t1
+//renderizar el template de la pagina   INICIAL T1
 app.get('/', function(request, response){
         response.render('inicio');
 });
 
-//renderizar la pagina de la tienda dependiendo si es camisa, camiseta o pantalon
+//renderizar la pagina de la    TIENDA DEPENDIENDO   si es camisa, camiseta o pantalon
 app.get('/tienda', function(request, response){
     const coleccion = db.collection('productos');
 
@@ -64,9 +71,9 @@ app.get('/tienda', function(request, response){
         response.render('home', contexto);
         
     });
-});
+}); 
 
-//Renderizar la tienda de manera general(todos los productos)
+//Renderizar la tienda de manera    GENERAL    (todos los productos)
 app.get('/tiendageneral', function(request,response){
     const coleccion = db.collection('productos');
 
@@ -82,7 +89,7 @@ app.get('/tiendageneral', function(request,response){
     });
 });
 
-//renderizar la pagina de descripcion para el documento
+//renderizar la pagina de   DESCRIPCION     para el documento
 app.get('/descripcion', function(request, response){
     const coleccion = db.collection('productos');
     var prod = request.query.producto;
@@ -95,33 +102,76 @@ app.get('/descripcion', function(request, response){
             console.log(err);
             response.send(err);
             return;
-        }
+        } 
 
         var contexto = {producto: docs};
-        response.render('descripcion', contexto);
+            response.render('descripcion', contexto);
     });
-});
+}); 
 
-//para agregar un documento a la base de datos de mongo
-app.get('/AgregarDocumento', function(request, response){
-    const coleccion = db.collection('productos');
-    //aqui debería pasarle variables por la ruta para agregar
-    coleccion.insert({
-            Titulo : "GIORDANA",
-            magen : "/imgs/ksjdfksjdnkfsdf",
-            Precio : 280000.0,
-            color : "Negro",
-            tallas : [ "xs", "s", "m"],
-    }, function(err, result){
+// CHECKOUT
+app.get('/checkOut', function(request, response){
+
+    const coleccion = db.collection('Carrito');
+    coleccion.find({}).toArray(function(err, docs){
         if(err){
-            console.error(err);
+            console.log(err);
             response.send(err);
             return;
-        }
+        } 
 
-        response.send('Documento agregado');
+        var contexto = { pCarrito: docs};
+        response.render('checkOut', contexto);
     });
 });
+
+//////////////////////////////////////////////////////RUTAS POST
+
+//Agregar item al carrito
+app.post('/api/AgregarAlCarrito', function(request, response){
+    const coleccion = db.collection('productos');
+    const coleccion2 = db.collection('Carrito');
+    let titulo = request.body.titulo;
+
+    coleccion.find({
+        Titulo:{
+            '$eq' : titulo
+        }
+    })
+    .toArray(function(err, doc){
+        if(err){
+            console.log(err);
+            response.send(err);
+            return;
+        } 
+        
+        coleccion2.find({
+            Titulo:{
+                '$eq' : titulo
+            }
+        }).toArray(function(err2, doc2){
+            if(err2){
+                console.log(err2);
+                response.send(err2);
+                return;
+            } 
+
+            //console.log("exiiiiiste"+doc2[0]);
+
+            if(doc2[0]){
+                response.send("ya existe sorry");
+                //console.log("ya existe sorry");
+                return;
+            }else{
+                coleccion2.insert(doc[0]);
+               // console.log("insertò");
+                response.send("insertó");
+            }
+        });
+    });
+});
+
+
 
 /*
 //ejemplo de como usar el tipo de variable que va con esa ruta (en chrome se escribe /tienda/var=val)
