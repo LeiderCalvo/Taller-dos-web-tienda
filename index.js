@@ -45,6 +45,37 @@ app.get('/', function(request, response){
         response.render('inicio');
 });
 
+//filtro de talla
+app.get(`/tiendaTalla`, function(){
+    const coleccion = db.collection('productos');
+
+    coleccion.find({
+        soy: { 
+             '$eq': request.query.producto
+        },
+        tallas: {
+            '$eq': request.query.talla
+        }
+    }).toArray(function(err, docs){
+        if(err){
+            console.error(err);
+            response.send(err);
+            return;
+        }        
+        
+        var prod = request.query.producto;
+        console.log(prod);
+    
+        var contexto = {
+            titulo: prod.toUpperCase(),
+            productos: docs,
+        };
+        
+        response.render('home', contexto);
+        
+    }); 
+});
+
 //renderizar la pagina de la    TIENDA DEPENDIENDO   si es camisa, camiseta o pantalon
 app.get('/tienda', function(request, response){
     const coleccion = db.collection('productos');
@@ -176,6 +207,19 @@ app.post('/api/vaciarCarrito', function(request, response){
     const coleccion = db.collection('Carrito');
     coleccion.remove({});
     response.send("borrado");
+});
+
+//Agregar solicitudes
+app.post('/api/NuevaSolicitud', function (request, response) {
+    const coleccion = db.collection('Peticiones');
+    coleccion.insert({
+        cuenta: request.body.cuenta,
+        cedula: request.body.cedula,
+        direccion: request.body.direccion,
+        nombre: request.body.nombre,
+        productos: request.body.productos
+    });
+    response.send("Nueva solicitud creada");
 });
 
 

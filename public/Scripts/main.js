@@ -2,7 +2,7 @@ window.addEventListener('load', function(){
     
     //links de los botones flotantes
     document.querySelector(".carrito").addEventListener('click', function(){
-        window.location.href = "/";
+        window.location.href = "/checkOut";
     });
     
     document.querySelector(".camisetas").addEventListener('click', function(){
@@ -28,4 +28,13 @@ window.addEventListener('load', function(){
             window.location.href = "/descripcion/?producto="+name;
         });
     }
+
+
+    var ts= document.querySelectorAll(".talla");
+    ts.forEach(function(elem){
+        elem.addEventListener('click', function(){
+            var tit = document.querySelector('.titulo').innerText.toString;
+                window.location.href = `/tienda/?producto=${tit}&talla=${elem.innerText}`;
+        });
+    });
 });

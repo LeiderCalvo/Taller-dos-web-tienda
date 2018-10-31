@@ -82,7 +82,7 @@ window.addEventListener('load', function(){
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: ``,
+                body: `productos=${productos}&cuenta=${cuenta}&cedula=${cedula}&direccion=${direccion}&nombre=${nombre}`,
             }).then(function(respuesta){
                 return respuesta.text();
             }).catch(function(error){
@@ -95,4 +95,7 @@ window.addEventListener('load', function(){
        }
     }); 
 
+    document.querySelector('.btnVolver').addEventListener('click', function(){
+        window.location.href = "/tiendageneral";
+    });
 });

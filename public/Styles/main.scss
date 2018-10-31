@@ -221,3 +221,14 @@ footer{
         }
     }
 }
+.filtros__talla{
+    display: flex;
+    flex-direction: row;
+    .talla{
+        background-color: #000000;
+        color: white;
+        border: 1px solid white;
+        padding: 1%;
+        width: 3%;
+    }
+}
