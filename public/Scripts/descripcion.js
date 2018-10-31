@@ -20,21 +20,29 @@ window.addEventListener('load', function(){
     });
     
     function addToCarrito(atributo){
-        elemsCarrito.push(atributo);
-        localStorage.setItem('carrito', JSON.stringify(elemsCarrito));
-    
-        fetch(`/api/AgregarAlCarrito`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `titulo=${atributo}`,
-        }).then(function(respuesta){
-            return respuesta.text();
-        }).catch(function(error){
-            console.error(error);
-        }).then(function(mensaje){
-            console.log(mensaje);
+        var p = elemsCarrito.find(function (element) {
+            return element == atributo;
         });
+
+        if(p){
+            return;
+        }else{
+            elemsCarrito.push(atributo);
+            localStorage.setItem('carrito', JSON.stringify(elemsCarrito));
+            
+            fetch(`/api/AgregarAlCarrito`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `titulo=${atributo}`,
+            }).then(function(respuesta){
+                return respuesta.text();
+            }).catch(function(error){
+                console.error(error);
+            }).then(function(mensaje){
+                console.log(mensaje);
+            });
+        }
     }
 });

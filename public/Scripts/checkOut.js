@@ -61,4 +61,38 @@ window.addEventListener('load', function(){
         window.location.href = "/checkOut";
     });
 
-}); 
+    document.querySelector('.btn').addEventListener('click', function(){
+       var cuenta = document.getElementById('numeroDeCuenta').value;
+       var cedula = document.getElementById('cedula').value;
+       var direccion = document.getElementById('direccion').value;
+       var nombre = document.getElementById('nombre').value;
+       var check = document.getElementById('condiciones').checked;
+        
+        console.log(check);
+
+       if(cuenta == '' || cedula == '' || direccion == '' || nombre == '' || check == false){
+           alert("Por favor llene todos los campos");    
+           return;
+        }else{
+            var productos = JSON.parse(localStorage.getItem('carrito'));
+            //console.log(productos);
+        
+            fetch(`/api/NuevaSolicitud`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: ``,
+            }).then(function(respuesta){
+                return respuesta.text();
+            }).catch(function(error){
+                console.error(error);
+            }).then(function(mensaje){
+                console.log(mensaje);
+            });
+
+            window.location.href = "/tiendageneral";
+       }
+    }); 
+
+});
