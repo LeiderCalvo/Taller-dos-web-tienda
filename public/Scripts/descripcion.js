@@ -3,7 +3,7 @@ window.addEventListener('load', function(){
         window.location.href = "/tiendageneral";
     });
 
-    var elemsCarrito = JSON.parse(localStorage.getItem('carritos'));
+    var elemsCarrito = JSON.parse(localStorage.getItem('carrito'));
     if(elemsCarrito == null){
         elemsCarrito = [];
     }

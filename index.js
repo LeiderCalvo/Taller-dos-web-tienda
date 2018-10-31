@@ -171,6 +171,12 @@ app.post('/api/AgregarAlCarrito', function(request, response){
     });
 });
 
+//vaciar carrito
+app.post('/api/vaciarCarrito', function(request, response){
+    const coleccion = db.collection('Carrito');
+    coleccion.remove({});
+    response.send("borrado");
+});
 
 
 /*

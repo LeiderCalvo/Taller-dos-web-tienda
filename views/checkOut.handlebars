@@ -10,6 +10,7 @@
 <body>
     <div class="cuerpo">
         <div class="cuerpo__izq">
+            <div class="prueba">
             {{#each pCarrito}}
                 <div class="cuerpo__izq__item">
                     <img src="{{imagen}}" alt="" class="cuerpo__izq__item__img" width="15%" height="35%">
@@ -23,21 +24,46 @@
                     <div data-color="{{color}}" class="color"></div>
                     <p>Talla</p>
                     <div data-talla="{{talla}}" class="talla"></div>
-                    <h3 class="precio">${{Precio}}</h3>
+                    <h3 data-precio="{{Precio}}" class="precio">${{Precio}}</h3>
                     <div class="cerrar">x</div>
                 </div>
             {{/each}}
+            </div>
         </div>
-        <div class="cuerpo__der">
-
-        </div>
+            <div class="final">
+                <div class="btnVaciar">VACIAR CARRITO</div>
+                <div class="total">TOTAL: </div>
+            </div>
     </div>
+        <div class="cuerpo__der">
+            <h2>DETALLES DEL PAGO</h2>
+            <div class="logos">
+                <img src="/imgs/visa.png" alt="">
+                <img src="/imgs/mastercard.png" alt="">
+                <img src="/imgs/paypal.png" alt="">
+            </div>
+            <div class="form">
+                <h5>NUMERO DE CUENTA</h5>
+                <input type="text" name="" id="numeroDeCuenta">
+                <div class="form__hor">
+                    <div class="form__hor__ver">
+                        <h5>CEDULA</h5>
+                        <input type="text" name="" id="cedula">
+                    </div>
+                    <div class="form__hor__ver">
+                        <h5>DIRECCIÓN</h5>
+                        <input type="text" name="" id="direccion">
+                    </div>
+                </div>
+                <h5>NOMBRE Y APELLIDO</h5>
+                <input type="text" name="" id="nombre">
+            </div>
 
-        <div class="final">
-            <div class="btnVaciar">VACIAR CARRITO</div>
-            <div class="total">total: </div>
+            <input type="checkbox" name="" id="condiciones">
+            <h6>ACEPTO TERMINOS Y CONDICIONES</h6>
+
+            <div>REALIZAR PAGO</div>
         </div>
-
 
     <script src="/Scripts/checkOut.js"></script>
 </body>
